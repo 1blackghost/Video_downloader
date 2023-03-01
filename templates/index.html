@@ -1,5 +1,198 @@
-<!DOCTYPE html>
-<form method="post" action="/simple">
-    <input name="url" type="text">
-    <input value="submit" type="submit">
-</form>
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/main.css">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    </head>
+    <body>
+        <div class="loading">
+            <div class="element1"><div class="element2"><div class="light"></div><span id="progress">100%</span></div></div>
+        </div>
+        <div class="nav">
+            <div class="nav-bar">
+                <b class="logo">YouTube</b>
+            <button onclick="navi()" class="nav-button"><i class="fa fa-reorder" id="ham"></i></button>
+            <div class="nav-item" id="nav-item" style="height: 0%;">
+            <a href="#" class="nav-option">About Us</a>
+            <a href="#" class="nav-option">Features</a>
+            <a href="#" class="nav-option">Home</a>
+        </div>
+    </div>
+            <h1>Download Videos and Audios Fast and Secure</h1>
+            <form id="searchForm" action="/" method="post">
+                <input name='url' type="text" class="input" placeholder="Paste Url...." >
+                <input class="button1" type="submit" value="Download">
+            </form>
+        </div>
+        <div class="download" id="download-video">
+            <div class="link-details" id="detail">
+                <iframe id="iframe" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen src=""></iframe>
+                <h4 id="info"> VIDEO PREVIEW </h4>
+            </div>
+            <div id="tabs" class="tabs">
+                
+                <button class="button2" onclick="tabs(0, 'video')">Video/Audio</button>
+                <button class="button2" onclick="tabs(1, 'Trimmer')">Trimmer</button>
+                <div class="videoandaudio" id="video">
+                    <table>
+                        <tr>
+                            <tr>
+                                <td class="font25">Type</td>
+                                <td class="font25">Quality/<br>Format</td>
+                                <td class="font25">Download</td>
+                               
+                            </tr>
+                            <td>Video</td>
+                            <td>
+                                <select>
+                                    <option value="">1080p</option>
+                                    <option value="">720p</option>
+                                    <option value="">360p</option>
+                                    <option value="">240p</option>
+                                    <option value="">144p</option>
+                                </select>
+                            </td>
+                            <td><button class="downloadbut">Download</button></td>
+                        </tr>
+                        <tr>
+                            <td>Audio</td>
+                            <td>
+                                <select>
+                                    <option value="">MP3</option>
+                                    <option value="">M4A</option>
+                                    <option value="">WAV</option>
+                                    <option value="">ACC</option>
+                                </select>
+                            </td>
+                            <td><button class="downloadbut">Download</button></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="videoandaudio" id="Trimmer">
+                    <h5 class="font25">Trimmer</h5>
+                    <table>
+                        <tr>
+                            <td>From</td>
+                            <td>
+                                H:<input type="text" placeholder="00" min="0" max="24" class="inputtime">
+                                M:<input type="text" placeholder="00" min="0" max="60" class="inputtime"> 
+                                S:<input type="text" placeholder="00" min="0" max="60" class="inputtime"></td>
+                        </tr>
+                        <tr>
+                                <td>To</td>
+                                <td>
+                                H:<input type="text" placeholder="00" min="0" max="24" class="inputtime">
+                                M:<input type="text" placeholder="00" min="0" max="60" class="inputtime"> 
+                                S:<input type="text" placeholder="00" min="0" max="60" class="inputtime"></td>
+                        </tr>
+                    </table>
+                    
+                    <table>
+                        <tr>
+                            <tr>
+                                <td class="font25">Type</td>
+                                <td class="font25">Quality/<br>Format</td>
+                                <td class="font25">Download</td>
+                               
+                            </tr>
+                            <td>Video</td>
+                            <td>
+                                <select>
+                                    <option value="">1080p</option>
+                                    <option value="">720p</option>
+                                    <option value="">360p</option>
+                                    <option value="">240p</option>
+                                    <option value="">144p</option>
+                                </select>
+                            </td>
+                            <td><button class="downloadbut">Download</button></td>
+                        </tr>
+                        <tr>
+                            <td>Audio</td>
+                            <td>
+                                <select>
+                                    <option value="">MP3</option>
+                                    <option value="">M4A</option>
+                                    <option value="">WAV</option>
+                                    <option value="">ACC</option>
+                                </select>
+                            </td>
+                            <td><button class="downloadbut">Download</button></td>
+                        </tr>
+                    </table>
+                </div>
+                
+            </div>
+    </div>
+        
+        <section class="head">
+            <h1>Online YouTube Downloader</h1>
+            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium 
+                voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati 
+                cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, 
+                id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+                 Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus 
+                 id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.
+                  <br><br>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut
+                   et voluptates repudiandae sint et molestiae non recusandae. <br><br>Itaque earum rerum hic tenetur 
+                   a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut 
+                   perferendis doloribus asperiores repellat</p>
+        </section>
+        <section class="features">
+            <h1>Features</h1>
+        <div class="card">
+            <i class="fa fa-download"></i>
+            <h2>Fast Download</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
+                aliquip ex ea commodo consequat. </p>
+        </div>
+        <div class="card">
+            <i class="fa fa-diamond"></i>
+            <h2>Free of Charge</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
+                aliquip ex ea commodo consequat. </p>
+        </div>
+        <div class="card">
+            <i class="fa fa-lock"></i>
+            <h2>Secure</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
+                aliquip ex ea commodo consequat. </p>
+        </div>
+        <div class="card">
+            <i class="fa fa-hdd-o" ></i>
+            <h2>No Installation</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
+                aliquip ex ea commodo consequat. </p>
+        </div>
+        <div class="card">
+            <i class="fa fa-user-o"></i>
+            <h2>User Friendly</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
+                aliquip ex ea commodo consequat. </p>
+        </div>
+        
+        <div class="card">
+            <i class="fa fa-smile-o"></i>
+            <h2>Happy Customers</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
+                aliquip ex ea commodo consequat. </p>
+        </div>
+        </section>
+    
+    
+            <div class="footer"></div>
+        
+        <script src="/static/main.js"></script>
+
+    </body>
+</html>
