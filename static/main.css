@@ -361,12 +361,14 @@ h3{
     
 }
 
-#progress{
-    content: "he";
+
+#loadn{
+    content:"loading";
     color: white;
     position: absolute;
     margin-left: -5%;
     margin-top: 5px;
+    position: absolute;
 }
 @media screen and (max-width:650px) {
     .nav h1{

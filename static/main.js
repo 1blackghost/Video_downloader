@@ -1,8 +1,10 @@
 //const { replaceWith } = require("cheerio/lib/api/manipulation");
 
+
 $(function() {
   $("#searchForm").submit(function(e) {
     e.preventDefault();
+    $("#loading").show();
         $.ajax({
             url: '/',
             data: $('form').serialize(),
@@ -20,8 +22,32 @@ $(function() {
                     $("#info").fadeIn("slow");
                     $("#download-video").show();
                     $("#detail").show();
+                    $("#loading").hide();
+                    
                     if (a["domain"]=="youtube"){
                       $("#iframe").attr('src',a["key"]);
+                      let value=`<select id="videores">`;
+                      Object.keys(a["data"]["video"]).forEach(function(key) {
+                        value = value+`
+                      
+                          <option value="">${key.substring(1,key.length-1)}</option>
+                          `;
+
+                      });
+                      value=value+"</select>"
+       
+                      $("#videores").replaceWith(value);
+                      let value2=`<select id="audiores">`;
+                      Object.keys(a["data"]["audio"]).forEach(function(key) {
+                        value2 = value2+`
+                      
+                          <option value="">${key}</option>
+                          `;
+
+                      });
+                      value2=value2+"</select>"
+       
+                      $("#audiores").replaceWith(value2);             
                     }
                   
                 }
@@ -32,6 +58,7 @@ $(function() {
                   $("#tabs").hide();
                   $("#iframe").hide();
                   $("#download").hide();
+                  $("#loading").hide();
 
 
                 }

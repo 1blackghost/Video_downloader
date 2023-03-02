@@ -9,8 +9,8 @@
 
     </head>
     <body>
-        <div class="loading">
-            <div class="element1"><div class="element2"><div class="light"></div><span id="progress">100%</span></div></div>
+        <div class="loading" id="loading">
+            <div class="element1"><div class="element2"><div class="light"></div id="loadn"><span id="progress">Analysing...</span></div></div>
         </div>
         <div class="nav">
             <div class="nav-bar">
@@ -48,7 +48,7 @@
                             </tr>
                             <td>Video</td>
                             <td>
-                                <select>
+                                <select id="videores">
                                     <option value="">1080p</option>
                                     <option value="">720p</option>
                                     <option value="">360p</option>
@@ -61,7 +61,7 @@
                         <tr>
                             <td>Audio</td>
                             <td>
-                                <select>
+                                <select id="audiores">
                                     <option value="">MP3</option>
                                     <option value="">M4A</option>
                                     <option value="">WAV</option>
