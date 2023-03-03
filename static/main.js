@@ -1,9 +1,33 @@
-//const { replaceWith } = require("cheerio/lib/api/manipulation");
+
+
+
+$(document).ready(function() {
+  $("#progress").text("0");
+
+  $("#hidden-invoker").click(function() {
+    var progress = $("#progress");
+    var currentVal = parseInt(progress.text());
+    if (currentVal < 100) {
+      updateProgress(progress, currentVal + 10);
+    }
+  });
+});
+
+function updateProgress(progress, newVal) {
+  progress.text(newVal);
+  $("#element2").css("width", toString(newVal)+"%");
+  if (newVal < 100) {
+    setTimeout(function() {
+      updateProgress(progress, newVal + 10);
+    }, 700);
+  }
+}
 
 
 $(function() {
   $("#searchForm").submit(function(e) {
     e.preventDefault();
+    $("#hidden-invoker").click();
     $("#loading").show();
         $.ajax({
             url: '/',
@@ -22,6 +46,8 @@ $(function() {
                     $("#info").fadeIn("slow");
                     $("#download-video").show();
                     $("#detail").show();
+                    $("#progress").text("100");
+                    $("#element2").css("width", "100%");
                     $("#loading").hide();
                     
                     if (a["domain"]=="youtube"){
