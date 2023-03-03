@@ -15,7 +15,9 @@ $(document).ready(function() {
 
 function updateProgress(progress, newVal) {
   progress.text(newVal);
-  $("#element2").css("width", toString(newVal)+"%");
+  $("#element2").width(newVal + "%");
+
+
   if (newVal < 100) {
     setTimeout(function() {
       updateProgress(progress, newVal + 10);
@@ -26,6 +28,7 @@ function updateProgress(progress, newVal) {
 
 $(function() {
   $("#searchForm").submit(function(e) {
+     $("#progress").text("0");
     e.preventDefault();
     $("#hidden-invoker").click();
     $("#loading").show();
@@ -47,7 +50,7 @@ $(function() {
                     $("#download-video").show();
                     $("#detail").show();
                     $("#progress").text("100");
-                    $("#element2").css("width", "100%");
+                    $("#element2").width(100 + "%");
                     $("#loading").hide();
                     
                     if (a["domain"]=="youtube"){
