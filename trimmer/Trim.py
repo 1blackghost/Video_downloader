@@ -1,5 +1,5 @@
-from moviepy.editor import *
-import uuid
+from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
+from nanoid import generate
 
 '''
     This module helps to trim video and music file and saves in appropriate formats.
@@ -14,8 +14,11 @@ class Trimmer():
         self.file_name = file_name
     
     def trim_video(self, start: int, end: int) -> str:
-        video = VideoFileClip(self.file_name);
-        clip = video.subclip(start, end);
-        filename = f"{str(uuid.uuid4())}.mp4"
-        clip.write_videofile(filename, codec='libx264')
-        return filename
+        extension = self.find_ext()
+        video_filename = f"{str(generate(size=10))}.{extension}"
+        ffmpeg_extract_subclip(self.file_name, start, end, targetname=video_filename)
+        return video_filename
+    
+    def find_ext(self):
+        ext = self.file_name.split('.')
+        return ext[1]
