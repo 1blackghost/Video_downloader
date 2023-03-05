@@ -1,7 +1,39 @@
+function triggerPing(){
+    var intervalId=window.setInterval(function(){loadnewdata()},1000)
+    function loadnewdata(){
+      var text=parseInt($("#progress").text());
+      $.ajax({
+        url:'/return-percentage',
+        type:'POST',
+        success:function(response){
+          
+          console.log(response);
+          var a = JSON.parse(response);
+          var checking = a["percentage"];
+          $("#progress2").text(checking);
+        
+          if (text!=checking){
+                $("#progress2").text(checking);
+                text=checking;
+          }
+          if (text==100){
+            $("#loader2").hide();
+           clearInterval(intervalId);
+
+
+          }
+        }
+      });
+    }
+  };
+
+
+
 $(function() {
   $("#myForm2").submit(function(e) {
-     $("#progress").text("0");
+     $("#progress2").text("0");
         e.preventDefault();
+        $("#loader2").show();
         $.ajax({
             url: '/',
             data:$(this).serialize(),
@@ -10,13 +42,14 @@ $(function() {
               e.preventDefault();
               const a = JSON.parse(response);
               if (a['status']=='ok'){
-                //invoke ping function here
-                  
+                $("#loader2").show();
+                triggerPing();
 
               }
               if (a["status"]=="bad"){
                 $('#info').text("Error! Please Select Another.");
-                $('#progress').hide();
+                $('#progress2').hide();
+                $("#loader2").hide();
 
               }
 

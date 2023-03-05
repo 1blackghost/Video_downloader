@@ -7,9 +7,9 @@ from flask import request,jsonify
 from assets import regex,Yt
 import json
 
-@app.route("/return-percentage")
+@app.route("/return-percentage",methods=["POST"])
 def find_percentage():
-    return json.dumps({'percentage':0})
+    return json.dumps({'percentage':'100'})
 
 
 @app.route("/",methods=["POST","GET"])

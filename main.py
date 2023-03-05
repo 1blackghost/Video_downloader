@@ -7,7 +7,7 @@ from assets import regex
 
 #Creation of flask app
 app=Flask(__name__)
-
+app.secret_key="123ABN"
 
 #Main Entry Point Here.
 @app.route("/")
