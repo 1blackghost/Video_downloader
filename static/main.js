@@ -1,3 +1,65 @@
+$(function() {
+  $("#myForm2").submit(function(e) {
+     $("#progress").text("0");
+        e.preventDefault();
+        $.ajax({
+            url: '/',
+            data:$(this).serialize(),
+            type: 'POST',
+            success: function(response) {
+              e.preventDefault();
+              const a = JSON.parse(response);
+              if (a['status']=='ok'){
+                //invoke ping function here
+                  
+
+              }
+              if (a["status"]=="bad"){
+                $('#info').text("Error! Please Select Another.");
+                $('#progress').hide();
+
+              }
+
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+});
+
+
+$(function() {
+  $("#myForm").submit(function(e) {
+     $("#progress").text("0");
+    e.preventDefault();
+        $.ajax({
+            url: '/',
+            data:$(this).serialize(),
+            type: 'POST',
+            success: function(response) {
+              e.preventDefault();
+              const a = JSON.parse(response);
+              if (a['status']=='ok'){
+                //invoke ping function here
+                  
+
+              }
+              if (a["status"]=="bad"){
+                $('#info').text("Error! Please Select Another.");
+                $('#progress').hide();
+
+              }
+
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+});
+
+
 
 
 
@@ -39,14 +101,15 @@ $(function() {
             success: function(response) {
               const a = JSON.parse(response);
                 if (a["status"]=="ok"){
-                    $("#info").text("VIDEO PREVIEW");
+                    $("#prev").text("VIDEO PREVIEW");
                     $("#tabs").hide();
                     $("#tabs").fadeIn("slow");
                     $("#download").show();
                     $("#iframe").hide();
                     $("#iframe").fadeIn("slow");
+                    $("#prev").hide();
                     $("#info").hide();
-                    $("#info").fadeIn("slow");
+                    $("#prev").fadeIn("slow");
                     $("#download-video").show();
                     $("#detail").show();
                     $("#progress").text("100");
@@ -55,24 +118,16 @@ $(function() {
                     
                     if (a["domain"]=="youtube"){
                       $("#iframe").attr('src',a["key"]);
-                      let value=`<select id="videores">`;
+                      let value=`<select id="videores" name="videores">`;
                       Object.keys(a["data"]["video"]).forEach(function(key) {
-                        value = value+`
-                      
-                          <option value="">${key.substring(1,key.length-1)}</option>
-                          `;
-
+                        value += `<option value="${key.substring(1, key.length-1)}">${key.substring(1, key.length-1)}</option>`;
                       });
                       value=value+"</select>"
        
                       $("#videores").replaceWith(value);
-                      let value2=`<select id="audiores">`;
+                      let value2=`<select id="audiores" name="audiores">`;
                       Object.keys(a["data"]["audio"]).forEach(function(key) {
-                        value2 = value2+`
-                      
-                          <option value="">${key}</option>
-                          `;
-
+                        value2 += `<option value="${key.substring(0, key.length)}">${key.substring(0, key.length)}</option>`;
                       });
                       value2=value2+"</select>"
        
@@ -88,6 +143,7 @@ $(function() {
                   $("#iframe").hide();
                   $("#download").hide();
                   $("#loading").hide();
+                  $("#prev").hide();
 
 
                 }

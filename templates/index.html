@@ -32,7 +32,8 @@
         <div class="download" id="download-video">
             <div class="link-details" id="detail">
                 <iframe id="iframe" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen src=""></iframe>
-                <h4 id="info"> VIDEO PREVIEW </h4>
+                <h4 id="prev" style="display:none"> VIDEO PREVIEW </h4>
+                <h5 id="info" style="color:red" id="info"></h5>
             </div>
             <div id="tabs" class="tabs">
                 
@@ -47,29 +48,27 @@
                                 <td class="font25">Download</td>
                                
                             </tr>
-                            <td>Video</td>
-                            <td>
-                                <select id="videores">
-                                    <option value="">1080p</option>
-                                    <option value="">720p</option>
-                                    <option value="">360p</option>
-                                    <option value="">240p</option>
-                                    <option value="">144p</option>
-                                </select>
-                            </td>
-                            <td><button class="downloadbut">Download</button></td>
+                                <td>Video</td>
+                                <td>
+                                    <form id="myForm" name="myForm" method="post" action="/">
+                                        <select id="videores" name="videores">
+                                            <option value="">sample</option>
+                                            
+                                        </select>
+                                </td>
+                                <td><input value="Download" type="submit" class="downloadbut"></td>
+                            </form>
                         </tr>
                         <tr>
-                            <td>Audio</td>
-                            <td>
-                                <select id="audiores">
-                                    <option value="">MP3</option>
-                                    <option value="">M4A</option>
-                                    <option value="">WAV</option>
-                                    <option value="">ACC</option>
-                                </select>
-                            </td>
-                            <td><button class="downloadbut">Download</button></td>
+                           <td>Audio</td>
+                                <td>
+                                    <form id="myForm2" name="myForm2" method="post" action="/">
+                                        <select id="audiores" name="audiores">
+                                            <option value="">sample</option>
+                                        </select>
+                                </td>
+                                <td><input value="Download" type="submit" class="downloadbut"></td>
+                            </form>
                         </tr>
                     </table>
                 </div>
