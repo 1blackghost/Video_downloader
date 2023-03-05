@@ -6,8 +6,6 @@ function triggerPing(){
         url:'/return-percentage',
         type:'POST',
         success:function(response){
-          
-          console.log(response);
           var a = JSON.parse(response);
           var checking = a["percentage"];
           $("#progress2").text(checking);
@@ -61,11 +59,11 @@ $(function() {
     });
 });
 
-
 $(function() {
   $("#myForm").submit(function(e) {
-     $("#progress").text("0");
-    e.preventDefault();
+     $("#progress2").text("0");
+        e.preventDefault();
+        $("#loader2").show();
         $.ajax({
             url: '/',
             data:$(this).serialize(),
@@ -74,13 +72,14 @@ $(function() {
               e.preventDefault();
               const a = JSON.parse(response);
               if (a['status']=='ok'){
-                //invoke ping function here
-                  
+                $("#loader2").show();
+                triggerPing();
 
               }
               if (a["status"]=="bad"){
                 $('#info').text("Error! Please Select Another.");
-                $('#progress').hide();
+                $('#progress2').hide();
+                $("#loader2").hide();
 
               }
 
@@ -91,6 +90,8 @@ $(function() {
         });
     });
 });
+
+
 
 
 
