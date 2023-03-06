@@ -17,10 +17,6 @@ function triggerPing(){
                 $("#new2").width(checking + "%");
                 text=checking;
           }
-          if (text>100){
-                $("#progress2").text(trap);
-                $("#new2").width(96 + "%");
-          }
           if (text==100){
             $("#loader2").hide();
            clearInterval(intervalId);
