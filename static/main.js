@@ -1,22 +1,32 @@
 function triggerPing(){
-    var intervalId=window.setInterval(function(){loadnewdata()},1000)
+    var intervalId=window.setInterval(function(){loadnewdata()},2000)
     function loadnewdata(){
-      var text=parseInt($("#progress").text());
+      $("#progress2").text(0);
+      
+      var text=parseInt($("#progress2").text());
+
       $.ajax({
         url:'/return-percentage',
         type:'POST',
         success:function(response){
           var a = JSON.parse(response);
           var checking = a["percentage"];
-          $("#progress2").text(checking);
-        
+          var trap =a["trap"];
           if (text!=checking){
                 $("#progress2").text(checking);
+                $("#new2").width(checking + "%");
                 text=checking;
+          }
+          if (text>100){
+                $("#progress2").text(trap);
+                $("#new2").width(96 + "%");
           }
           if (text==100){
             $("#loader2").hide();
            clearInterval(intervalId);
+                  var button = document.getElementById("downloader");
+
+                  button.click();
 
 
           }
@@ -72,6 +82,7 @@ $(function() {
               e.preventDefault();
               const a = JSON.parse(response);
               if (a['status']=='ok'){
+
                 $("#loader2").show();
                 triggerPing();
 
@@ -90,8 +101,6 @@ $(function() {
         });
     });
 });
-
-
 
 
 
