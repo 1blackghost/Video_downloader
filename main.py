@@ -18,6 +18,7 @@ with app.app_context():
     #importing views from different files
     from simple_view import *
     from extras import *
+    from trimmer_view import *
 
 if __name__=="__main__":
     app.run(debug=True)
