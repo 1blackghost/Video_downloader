@@ -1,3 +1,32 @@
+$('#audiotrim').click(function(){
+     $("#progress").text("0");
+    $("#hidden-invoker").click();
+    $("#loading").show();
+    console.log($("#trimForm").serialize());
+        $.ajax({
+            url: '/trim/audio',
+            data: $('#trimForm').serialize(),
+            type: 'POST',
+            success: function(response) {
+              const a = JSON.parse(response);
+                if (a["status"]=="ok"){
+                    $("#progress").text("100");
+                    $("#element2").width(100 + "%");
+                    $("#loading").hide();
+      
+                  
+                }  
+          
+
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+});
+
+
+
 $('#videotrim').click(function(){
      $("#progress").text("0");
     $("#hidden-invoker").click();
