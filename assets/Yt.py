@@ -73,21 +73,22 @@ class Y_D:
         #appending to the parent dictionary audio and video dictionary
         #Timsort algorithm with an average case performance of O(n log n),
         #it's unlikely that the performance impact of sorting will be noticeable.
-        #A simple ascending ordered sort to produce quality in order.
+        #A simple desending ordered sort to produce quality in order.
         ''' Thanks to ChatGPT'''
         #video res sort
         sortedDict = {}
-        for key in sorted(d_video.keys(), key=lambda x: int(x.strip('"')[:-1])):
+        for key in sorted(d_video.keys(), key=lambda x: int(x.strip('"')[:-1]), reverse=True):
             sortedDict[key] = d_video[key]
-        d["video"]=sortedDict
-        #audio res sort
+        d["video"] = sortedDict
+
         sortedDict = {}
         pattern = re.compile(r'\d+')
-        for key in sorted(d_audio.keys(), key=lambda x: int(pattern.search(x).group())):
+        for key in sorted(d_audio.keys(), key=lambda x: int(pattern.search(x).group()), reverse=True):
             sortedDict[key] = d_audio[key]
+        d["audio"] = sortedDict
 
-        d["audio"]=sortedDict 
         return d
+
 
 
     def start_download(self, obj):

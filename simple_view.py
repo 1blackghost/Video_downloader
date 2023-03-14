@@ -10,12 +10,30 @@ import json
 import threading
 import time
 import random
+import re
+
 
 
 download_complete=0
 starter=False
 file_path=""
 percentage=0
+
+
+def get_key(url):
+
+    video_key = ""
+
+    # extract video key from youtube.com/watch?v= URL format
+    match = re.search(r"youtube\.com/watch\?v=([A-Za-z0-9_-]{11})", url)
+    if match:
+        video_key = match.group(1)
+
+    # extract video key from youtu.be URL format
+    match = re.search(r"youtu\.be/([A-Za-z0-9_-]{11})", url)
+    if match:
+        video_key = match.group(1)
+    return video_key
 
 @app.route("/getFile",methods=["GET"])
 def send_the_file():
@@ -84,7 +102,7 @@ def simple():
             session['filename']=yt.get_title()
             d=yt.check_available()
             session["d"]=d
-            return json.dumps({'status':'ok',"domain":"youtube","src":str(url),"key":"https://www.youtube.com/embed/"+str(url.split("=")[1]),"data":d})
+            return json.dumps({'status':'ok',"domain":"youtube","src":str(url),"key":"https://www.youtube.com/embed/"+str(get_key(url)),"data":d})
         elif val==1:
             return json.dumps({'status':'ok',"domain":"instagram","src":str(url)})
         else:
