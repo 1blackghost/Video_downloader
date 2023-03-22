@@ -285,6 +285,7 @@ function download(){
 }
 function navi(){
     var navi=document.getElementById("nav-item");
+
     if(navi.style.height==="0%"){
         navi.style.height="30%"
     }
@@ -295,6 +296,7 @@ function navi(){
 
 function tabs(evt,tabName) {
     var i, tabcontent, tablinks;
+    var color="#d0312d";
   
     tabcontent = document.getElementsByClassName("videoandaudio");
     for (i = 0; i < tabcontent.length; i++) {
@@ -308,6 +310,6 @@ function tabs(evt,tabName) {
     }
   
     document.getElementById(tabName).style.display = "block";
-    tablinks[evt].style.backgroundColor="rgb(255, 60, 0)";
+    tablinks[evt].style.backgroundColor=color;
     tablinks[evt].style.color="white";
   } 
