@@ -2,6 +2,7 @@
     <head>
         <link rel="stylesheet" href="/static/main.css">
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet"> 
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -11,10 +12,15 @@
     <body>
     <button id="downloader" style="display: none;" onclick="window.location.href = '/getFile'">download</button>
          <div class="loading" id="loader2">
-            <div class="element1"><div class="element2" id="new2"><div class="light"></div id="loadn"><span id="progress2">100%`</span></div></div>
+            <div class="elements1">
+                <div class="circle"><div class="circle2"></div></div>
+                <div class="text">Asking Your File from YouTube...</div>
+                <div id="element2"><div id="loadn"><span id="progress2"></span></div></div>
+            </div>
+            
         </div>
-        <div class="loading" id="loading">
-            <div class="element1"><div class="element2" id="element2"><div class="light"></div id="loadn"><span id="progress">100%</span></div></div>
+        <div class="loading" id="loading" >
+            <div class="element1"><div class="element2" id="element2"><div class="light"></div></div><div id="loadn"><span id="progress">100%</span></div></div>
         </div>
         <div class="nav">
             <div class="nav-bar">
@@ -35,7 +41,7 @@
         </div>
         <div class="download" id="download-video">
             <div class="link-details" id="detail">
-                <iframe id="iframe" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen src=""></iframe>
+                <iframe id="iframe"allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen src=""></iframe>
                 <h4 id="prev" style="display:none"> VIDEO PREVIEW </h4>
                 <h5 id="info" style="color:red" id="info"></h5>
             </div>
@@ -77,23 +83,22 @@
                     </table>
                 </div>
                 <div class="videoandaudio" id="Trimmer">
-                    <h5 class="font25">Trimmer</h5>
-                    <form method="post" action="/trim" id="trimForm">
+                    <form class="trimForm"method="post" action="/trim" id="trimForm">
                       <table>
                         <tr>
                           <td>From</td>
                           <td>
-                            H:<input name="sh" id="sh" type="text" placeholder="00" min="0" max="24" class="inputtime">
-                            M:<input name="sm" id="sm" type="text" placeholder="00" min="0" max="60" class="inputtime"> 
-                            S:<input name="ss" id="ss" type="text" placeholder="00" min="0" max="60" class="inputtime">
+                            H:<input id="sh" type="text" placeholder="00" min="0" max="24" class="inputtime">
+                            M:<input id="sm" type="text" placeholder="00" min="0" max="60" class="inputtime"> 
+                            S:<input id="ss" type="text" placeholder="00" min="0" max="60" class="inputtime">
                           </td>
                         </tr>
                         <tr>
                           <td>To</td>
                           <td>
-                            H:<input name="th"  id="th" type="text" placeholder="00" min="0" max="24" class="inputtime">
-                            M:<input name="tm" id="tm" type="text" placeholder="00" min="0" max="60" class="inputtime"> 
-                            S:<input name="ts" id="ts" type="text" placeholder="00" min="0" max="60" class="inputtime">
+                            H:<input id="th" type="text" placeholder="00" min="0" max="24" class="inputtime">
+                            M:<input id="tm" type="text" placeholder="00" min="0" max="60" class="inputtime"> 
+                            S:<input id="ts" type="text" placeholder="00" min="0" max="60" class="inputtime">
                           </td>
                         </tr>
                       </table>
@@ -193,6 +198,5 @@
             <div class="footer"></div>
         
         <script src="/static/main.js"></script>
-
     </body>
 </html>

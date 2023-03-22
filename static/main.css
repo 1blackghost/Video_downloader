@@ -184,7 +184,7 @@ h4{
     margin-bottom: 0px;
     margin-right: 0px;
     width:100%;
-    height: auto;
+    height: fit-content;
 }
 #info{
     display: none;
@@ -318,7 +318,28 @@ h3{
     padding: 20px;
     padding-bottom: 100px;
     overflow: hidden;
-   
+    text-align: center;
+}
+.elements1{
+    margin-left: -13%;
+    margin-top: -50px;
+    top: 45%;
+    left: 50%;
+    width: 26%;
+    height: 150px;
+    background-color: white;
+    position: fixed;
+    border-radius: 10px;
+    box-shadow: 5px 5px 50px var(--colour);
+    padding: 20px;
+    padding-bottom: 100px;
+    text-align: center;
+    overflow: hidden;
+}
+.text{
+    padding-top:50px;
+    font-family:monospace;
+    font-size: 15px;
 }
 .element2{
     background-image: linear-gradient(90deg,var(--colour),#ff8e00);
@@ -334,7 +355,30 @@ h3{
     height: 100%;
     background-image: linear-gradient(90deg,rgba(255, 255, 255, 0),rgb(255, 255, 255,0.7),rgba(255, 255, 255, 0));
     animation: light 0.75s infinite;
+    
+}
+.circle{
+    width: 100px;
+    height: 100px;
+    border: 15px solid orange;
+    border-top: 15px solid var(--colour);
+    border-bottom: 15px solid var(--colour);
+    border-radius: 50%;
+    animation: rotate 1.5s linear infinite;
+    margin: 0 auto;
+}
+.circle2{
+    width: 60px;
+    height: 60px;
+    border: 15px solid orange;
+    border-top: 15px solid var(--colour);
+    border-bottom: 15px solid var(--colour);
+    border-radius: 50%;
+    animation: rotate2 1.5s reverse linear infinite;
     position: absolute;
+    margin: -45px;
+    left:50%;
+    top:50%;
 }
 @keyframes load {
     0%{
@@ -362,17 +406,29 @@ h3{
     }
     
 }
-
+@keyframes rotate {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+@keyframes rotate2 {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(720deg);
+    }
+}
 
 #loadn{
     content:"loading";
     color: rgb(0, 0, 0);
-    left: 50%;
-    margin-left: -20px;
     margin-top: 30px;
-    position: absolute;
     font-size: 45px;
-    font-family: sans-serif;
+    font-family: 'Kanit', sans-serif;
 }
 
 @media screen and (max-width:650px) {
@@ -414,11 +470,18 @@ h3{
         font-size: 20px;
     }
     .element1{
-        margin-left: -35%;
+        margin-left: -40%;
         margin-top: -50px;
         top: 50%;
         left: 50%;
         width: 70%;
+    }
+    .elements1{
+        margin-left: -35%;
+        margin-top: -50px;
+        top: 50%;
+        left: 50%;
+        width: 60%;
     }
     #Trimmer table:nth-of-type(2){
         margin-left: auto;
