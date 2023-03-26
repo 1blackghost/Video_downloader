@@ -11,16 +11,14 @@
     </head>
     <body>
     <button id="downloader" style="display: none;" onclick="window.location.href = '/getFile'">download</button>
-         <div class="loading" id="loader2">
+         <div class="loading2" id="loader2">
             <div class="elements1">
                 <div class="circle"><div class="circle2"></div></div>
                 <div class="text">Asking Your File from YouTube...</div>
-                <div id="element2"><div id="loadn"><span id="progress2"></span></div></div>
+                <div id="element2" style="visibility: hidden;"><div id="loadn"><span id="progress2"></span></div></div>
             </div>
             
         </div>
-        <div class="loading" id="loading" >
-            <div class="element1"><div class="element2" id="element2"><div class="light"></div></div><div id="loadn"><span id="progress">100%</span></div></div>
         </div>
         <div class="nav">
             <div class="nav-bar">
@@ -40,6 +38,15 @@
             </form>
         </div>
         <div class="download" id="download-video">
+            <div class="loading" id="loading">
+                <div class="element1">
+                    <svg height="190" width="190">
+                        <circle id="loader"cx="95" cy="95" r="75" stroke="orange" stroke-width="15" fill="white" transform="rotate(-90 95 95)" />
+                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" id="progress">100%</text>
+                      </svg> 
+                      <div class="text2">Asking Your File from YouTube...</div>
+            </div>
+            </div>
             <div class="link-details" id="detail">
                 <iframe id="iframe"allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen src=""></iframe>
                 <h4 id="prev" style="display:none"> VIDEO PREVIEW </h4>

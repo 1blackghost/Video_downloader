@@ -51,6 +51,7 @@ navigation bar
     width: 100%;
     background-color: var(--colour);
     height: 50px;
+    z-index: 2;
 }
 .nav-button{
     display: none;
@@ -297,6 +298,12 @@ h3{
     display: block;
 }
 .loading{
+    width: 100%;
+    height: 300px;
+    z-index: 1;
+    display: none;
+}
+.loading2{
     position: fixed;
     width: 100%;
     height: 100%;
@@ -305,20 +312,20 @@ h3{
     display: none;
 }
 .element1{
-    margin-left: -25%;
-    margin-top: -50px;
-    top: 50%;
+    margin-left: -13%;
+    margin-top: 25px;
+    top: 300px;
     left: 50%;
-    width: 50%;
-    height: 30px;
+    width: 26%;
+    height: 150px;
     background-color: white;
-    position: fixed;
+    position: absolute;
     border-radius: 10px;
-    box-shadow: 5px 5px 50px var(--colour);
+    box-shadow: 1px 1px 10px rgb(119, 119, 119);
     padding: 20px;
     padding-bottom: 100px;
-    overflow: hidden;
     text-align: center;
+    overflow: hidden;
 }
 .elements1{
     margin-left: -13%;
@@ -340,22 +347,6 @@ h3{
     padding-top:50px;
     font-family:monospace;
     font-size: 15px;
-}
-.element2{
-    background-image: linear-gradient(90deg,var(--colour),#ff8e00);
-    height:100%;
-    border-radius: 100px;
-    animation-name: load;
-    animation-duration: 6s;
-    text-align: center;
-    overflow: hidden;
-}
-.light{
-    width:60%;
-    height: 100%;
-    background-image: linear-gradient(90deg,rgba(255, 255, 255, 0),rgb(255, 255, 255,0.7),rgba(255, 255, 255, 0));
-    animation: light 0.75s infinite;
-    
 }
 .circle{
     width: 100px;
@@ -380,32 +371,29 @@ h3{
     left:50%;
     top:50%;
 }
-@keyframes load {
-    0%{
-        width: 5%;
-    }
-    10%{
-        width:20%;
-    }
-    45%{
-        width:60%;
-    }
-    80%{
-        width: 85%;
-    }
-    100%{
-        width:100%;
-    } 
+#loader{
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 0;
+    animation: dash 14s linear ;
 }
-@keyframes light {
-    0%{
-        transform: translateX(-60%);
-    }
-    100%{
-        transform: translateX(140%);
-    }
-    
+#progress{
+    color: rgb(0, 0, 0);
+    font-size: 45px;
+    font-family: 'Kanit', sans-serif;
 }
+.text2{
+    padding-top:10px;
+    font-family:monospace;
+    font-size: 15px;
+}
+  @keyframes dash {
+    0% {
+      stroke-dashoffset: 1000;
+    }
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
 @keyframes rotate {
     0%{
         transform: rotate(0deg);
@@ -423,13 +411,7 @@ h3{
     }
 }
 
-#loadn{
-    content:"loading";
-    color: rgb(0, 0, 0);
-    margin-top: 30px;
-    font-size: 45px;
-    font-family: 'Kanit', sans-serif;
-}
+
 
 @media screen and (max-width:650px) {
     .nav h1{
@@ -470,11 +452,11 @@ h3{
         font-size: 20px;
     }
     .element1{
-        margin-left: -40%;
-        margin-top: -50px;
-        top: 50%;
+        margin-left: -35%;
+        margin-top: 20px;
+        top: 300px;
         left: 50%;
-        width: 70%;
+        width: 60%;
     }
     .elements1{
         margin-left: -35%;
