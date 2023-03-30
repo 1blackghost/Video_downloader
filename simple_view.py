@@ -28,7 +28,6 @@ def get_key(url):
     match = re.search(r"youtube\.com/watch\?v=([A-Za-z0-9_-]{11})", url)
     if match:
         video_key = match.group(1)
-
     # extract video key from youtu.be URL format
     match = re.search(r"youtu\.be/([A-Za-z0-9_-]{11})", url)
     if match:
