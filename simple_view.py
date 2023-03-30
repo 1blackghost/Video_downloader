@@ -67,11 +67,15 @@ def find_percentage():
     global download_complete
     global starter
     global percentage
-    if starter==False:
+    try:
+        if starter==False:
 
-        t=threading.Thread(target=findIfDownloadComplete,args=(session["filename"],session["total_size"],session["d"],session["res"],session["type"]))
-        t.start()
-        starter=True
+            t=threading.Thread(target=findIfDownloadComplete,args=(session["filename"],session["total_size"],session["d"],session["res"],session["type"]))
+            t.start()
+            starter=True
+    except:
+        #the trimmer goes here.
+        pass
     if download_complete==1:
         percentage=100
 
@@ -126,3 +130,14 @@ def simple():
         return json.dumps({'status':'ok'})
     else:
         return json.dumps({'status':'bad'})
+
+@app.route("/trim/<thing>",methods=["GET","POST"])
+def trimmer(thing):
+    if request.method=="POST":
+        starttime=(60*60*int(request.form["sh"])+60*int(request.form["sm"])+int(request.form["ss"]))
+        endtime=(60*60*int(request.form["th"])+60*int(request.form["tm"])+int(request.form["ts"]))
+        #starttime and endtime in ms
+        print(starttime,endtime,thing)
+        global download_complete
+        download_complete=1
+        return json.dumps({"status":"ok"})
