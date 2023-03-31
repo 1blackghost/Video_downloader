@@ -11,7 +11,8 @@ import threading
 import time
 import random
 import re
-
+import nanoid
+from nanoid import generate
 
 
 download_complete=0
@@ -49,8 +50,8 @@ def findIfDownloadComplete(filename,size,d,res,type):
     elif str(type)=="audio":   
         newD=d["audio"][str(res)][0]
     newD=str(newD).split("/")[1]
-    file_path=os.getcwd()+"/static/"+filename+"."+newD
-                
+    file_path=os.getcwd()+"/static/"+filename
+    print(file_path)
     dir_path=os.getcwd()
 
     with app.app_context():
@@ -102,7 +103,8 @@ def simple():
         if val==0:
             yt=Yt.Y_D(url)
             session["url"]=url
-            session['filename']=yt.get_title()
+            filename=generate()
+            session['filename']=filename
             d=yt.check_available()
             session["d"]=d
             return json.dumps({'status':'ok',"domain":"youtube","src":str(url),"key":"https://www.youtube.com/embed/"+str(get_key(url)),"data":d})
@@ -115,8 +117,10 @@ def simple():
         res=request.form["videores"]
         session["res"]=res
         session["type"]="video"
+        filename=session["filename"]
+        session['filename']=filename+".mp4"
         newD=d["video"][str('"'+res+'"')]   
-        session["total_size"]=yt.download(str(res),newD)
+        session["total_size"]=yt.download(str(res),newD,filename=session["filename"])
         
         return json.dumps({'status':'ok'})
     elif request.method=="POST" and "audiores" in request.form:
@@ -124,8 +128,10 @@ def simple():
         res=request.form["audiores"]
         session["res"]=res
         session["type"]="audio"
+        filename=session["filename"]
+        session['filename']=filename+".webm"
         newD=d["audio"][str(res)] 
-        session["total_size"]=yt.download(str(res),newD)
+        session["total_size"]=yt.download(str(res),newD,filename=session["filename"])
         return json.dumps({'status':'ok'})
     else:
         return json.dumps({'status':'bad'})
