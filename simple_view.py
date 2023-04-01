@@ -9,11 +9,10 @@ from assets import regex,Yt
 import json
 import threading
 import time
-import random
 import re
-import nanoid
 from nanoid import generate
-
+from trimmer import Trim
+import time
 
 download_complete=0
 starter=False
@@ -139,10 +138,32 @@ def simple():
 @app.route("/trim/<thing>",methods=["GET","POST"])
 def trimmer(thing):
     if request.method=="POST":
-        starttime=(60*60*int(request.form["sh"])+60*int(request.form["sm"])+int(request.form["ss"]))
-        endtime=(60*60*int(request.form["th"])+60*int(request.form["tm"])+int(request.form["ts"]))
-        #starttime and endtime in ms
-        print(starttime,endtime,thing)
-        global download_complete
-        download_complete=1
+        starttime=(3600 * int(request.form.get('sh')) + 60 * int(request.form.get('sm')) + int(request.form.get('ss')))
+        endtime=(3600 * int(request.form.get('th')) + 60 * int(request.form.get('tm')) + int(request.form.get('ts')))
+
+        yt_download_obj = Yt.Y_D(session.get('url'))
+        availablity = yt_download_obj.check_available()
+        resolution = list(availablity[thing])[0]
+        newD = availablity[thing][resolution]
+        resolution = resolution.replace('"', '')
+
+        ext = newD[0].split("/")[1]
+        title = f"{str(generate(size=10))}.{ext}"
+        session["filename"] = title
+        yt_download_obj.download(resolution, newD, filename=title)
+        time.sleep(5) # need to completely downloaded before running the trim
+
+        trim_thread = threading.Thread(target=trim, args=(starttime, endtime, title
+                                                          , ))
+        trim_thread.start()
         return json.dumps({"status":"ok"})
+
+
+def trim(starttime: int, endtime: int, title: str) -> None:
+    trim_obj = Trim.Trimmer(title)
+    filename = trim_obj.trim_video(starttime, endtime)
+    global file_path
+    file_path = f'static/{filename}'
+    global download_complete
+    download_complete = 1
+

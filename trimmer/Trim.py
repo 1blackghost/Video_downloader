@@ -11,12 +11,12 @@ class Trimmer():
         returns status code along with saved filename which will be unique.
     '''
     def __init__(self, file_name: str) -> None:
-        self.file_name = file_name
+        self.file_name = f"static/{file_name}"
     
     def trim_video(self, start: int, end: int) -> str:
         extension = self.find_ext()
         video_filename = f"{str(generate(size=10))}.{extension}"
-        ffmpeg_extract_subclip(self.file_name, start, end, targetname=video_filename)
+        ffmpeg_extract_subclip(self.file_name, start, end, outputfile=f"static/{video_filename}")
         return video_filename
     
     def find_ext(self):
