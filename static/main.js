@@ -27,7 +27,7 @@ $('#videotrim').click(function(){
 
 
 
-$('#videotrim').click(function(){
+$('#audiotrim').click(function(){
     console.log($("#trimForm").serialize());
         $.ajax({
             url: '/trim/audio',

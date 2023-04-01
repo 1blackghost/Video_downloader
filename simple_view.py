@@ -12,6 +12,7 @@ import time
 import re
 from nanoid import generate
 from trimmer import Trim
+import time
 
 download_complete=0
 starter=False
@@ -145,12 +146,15 @@ def trimmer(thing):
         resolution = list(availablity[thing])[0]
         newD = availablity[thing][resolution]
         resolution = resolution.replace('"', '')
-        yt_download_obj.download(resolution, newD)
-        
-        ext = newD[0].split("/")[1]
-        title = f"{yt_download_obj.get_title()}.{ext}"
 
-        trim_thread = threading.Thread(target=trim, args=(starttime, endtime, title, ))
+        ext = newD[0].split("/")[1]
+        title = f"{str(generate(size=10))}.{ext}"
+        session["filename"] = title
+        yt_download_obj.download(resolution, newD, filename=title)
+        time.sleep(5) # need to completely downloaded before running the trim
+
+        trim_thread = threading.Thread(target=trim, args=(starttime, endtime, title
+                                                          , ))
         trim_thread.start()
         return json.dumps({"status":"ok"})
 
