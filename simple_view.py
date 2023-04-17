@@ -18,6 +18,7 @@ from DBMS import helper
 
 
 
+
 def get_key(url):
 
     video_key = ""
@@ -47,32 +48,30 @@ def findIfDownloadComplete(uid,filename,size,d,res,type):
     newD=str(newD).split("/")[1]
     file_path=os.getcwd()+"/static/"+filename
     print(file_path)
-    helper.insert_this(uid,filename=file_path)
+    helper.update_this(uid,filename=file_path)
     dir_path=os.getcwd()
-
+    starter=1
     with app.app_context():
         while starter:
             time.sleep(1)
             now_size=os.path.getsize(file_path)
             if int(size)==int(now_size):
-                helper.insert_this(uid,download_complete=1,starter=0)
+                helper.update_this(uid,download_complete=1,starter=0)
+                starter=0
+                break
 
                 
 
 @app.route("/return-percentage",methods=["POST","GET"])
 def find_percentage():
     value=helper.read_for(session["uid"])
-    try:
-        if value[4]==0:
+    if int(value[4])==0:
+        t=threading.Thread(target=findIfDownloadComplete,args=(session["uid"],session["filename"],session["total_size"],session["d"],session["res"],session["type"]))
+        t.start()
+        helper.update_this(session["uid"],starter=1)
 
-            t=threading.Thread(target=findIfDownloadComplete,args=(session["uid"],session["filename"],session["total_size"],session["d"],session["res"],session["type"]))
-            t.start()
-            helper.insert_this(session["uid"],starter=1)
-    except:
-        #the trimmer goes here.
-        pass
-    if value[3]==1:
-        helper.insert_this(session["uid"],percentage=100)
+    if int(value[3])==1:
+        helper.update_this(session["uid"],percentage=100)
         percentage=100
     read_again=helper.read_for(session["uid"])
 
@@ -146,7 +145,6 @@ def trimmer(thing: str) -> json:
             + 60 * int(request.form.get("tm"))
             + int(request.form.get("ts"))
         )
-        print(session.get('url'))
         thread_func_thread = threading.Thread(target=thread_func, args=(thing, starttime, endtime, session.get('url')))
         thread_func_thread.start()
         
