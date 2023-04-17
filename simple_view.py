@@ -13,11 +13,9 @@ import re
 from nanoid import generate
 from trimmer import Trim
 import time
+from DBMS import helper
 
-download_complete=0
-starter=False
-file_path=""
-percentage=0
+
 
 
 def get_key(url):
@@ -36,13 +34,11 @@ def get_key(url):
 
 @app.route("/getFile",methods=["GET"])
 def send_the_file():
-    return send_file(file_path,as_attachment=True)
+    values=helper.read_for(session["uid"])
+    return send_file(values[2],as_attachment=True)
 
 
-def findIfDownloadComplete(filename,size,d,res,type):
-    global download_complete
-    global starter
-    global file_path
+def findIfDownloadComplete(uid,filename,size,d,res,type):
     dir_path=os.getcwd()
     if str(type)=="video":
         newD=d["video"][str('"'+res+'"')][0]
@@ -51,6 +47,7 @@ def findIfDownloadComplete(filename,size,d,res,type):
     newD=str(newD).split("/")[1]
     file_path=os.getcwd()+"/static/"+filename
     print(file_path)
+    helper.insert_this(uid,filename=file_path)
     dir_path=os.getcwd()
 
     with app.app_context():
@@ -58,40 +55,38 @@ def findIfDownloadComplete(filename,size,d,res,type):
             time.sleep(1)
             now_size=os.path.getsize(file_path)
             if int(size)==int(now_size):
-                download_complete=1
-                starter=False
+                helper.insert_this(uid,download_complete=1,starter=0)
 
-@app.route("/return-percentage",methods=["POST"])
+                
+
+@app.route("/return-percentage",methods=["POST","GET"])
 def find_percentage():
-    global download_complete
-    global starter
-    global percentage
+    value=helper.read_for(session["uid"])
     try:
-        if starter==False:
+        if value[4]==0:
 
-            t=threading.Thread(target=findIfDownloadComplete,args=(session["filename"],session["total_size"],session["d"],session["res"],session["type"]))
+            t=threading.Thread(target=findIfDownloadComplete,args=(session["uid"],session["filename"],session["total_size"],session["d"],session["res"],session["type"]))
             t.start()
-            starter=True
+            helper.insert_this(session["uid"],starter=1)
     except:
         #the trimmer goes here.
         pass
-    if download_complete==1:
+    if value[3]==1:
+        helper.insert_this(session["uid"],percentage=100)
         percentage=100
+    read_again=helper.read_for(session["uid"])
 
-    return json.dumps({'percentage':str(percentage)})
+    return json.dumps({'percentage':str(read_again[5])})
 
 
 @app.route("/",methods=["POST","GET"])
 
 #simple download post entry point
 def simple():
-    global yt
-    global download_complete
-    global d 
-    download_complete=0
-    starter=False
-    file_path=""
-    percentage=0
+    global conn
+    global cursor
+    uid=helper.insert_this()
+    session["uid"]=uid
     if "url" in session:
         yt=Yt.Y_D(session["url"])
 
@@ -103,7 +98,8 @@ def simple():
             yt=Yt.Y_D(url)
             session["url"]=url
             filename=generate()
-            session['filename']=filename
+            session["filename"]=filename
+            helper.update_this(uid=session["uid"],domain="youtube",filename=filename)
             d=yt.check_available()
             session["d"]=d
             return json.dumps({'status':'ok',"domain":"youtube","src":str(url),"key":"https://www.youtube.com/embed/"+str(get_key(url)),"data":d})
@@ -118,6 +114,7 @@ def simple():
         session["type"]="video"
         filename=session["filename"]
         session['filename']=filename+".mp4"
+        helper.update_this(uid=session["uid"],filename=session["filename"])
         newD=d["video"][str('"'+res+'"')]   
         session["total_size"]=yt.download(str(res),newD,filename=session["filename"])
         
@@ -129,6 +126,7 @@ def simple():
         session["type"]="audio"
         filename=session["filename"]
         session['filename']=filename+".webm"
+        helper.update_this(uid=session["uid"],filename=session["filename"])
         newD=d["audio"][str(res)] 
         session["total_size"]=yt.download(str(res),newD,filename=session["filename"])
         return json.dumps({'status':'ok'})
