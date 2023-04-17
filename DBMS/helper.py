@@ -39,11 +39,11 @@ def reset_back_to_start():
     if a == "y" or a == "yes":
         c.execute('''CREATE TABLE IF NOT EXISTS users
                     (uid INTEGER PRIMARY KEY AUTOINCREMENT,
-                     domain TEXT NOT NULL,
-                     filename INTEGER NOT NULL,
-                     download_complete INTEGER DEFAULT 0,
-                     starter INTEGER DEFAULT FALSE,
-                     percentage INTEGER DEFAULT 0,
+                     domain TEXT  ,
+                     filename TEXT  ,
+                     download_complete INTEGER,
+                     starter INTEGER ,
+                     percentage INTEGER,
                      toa TEXT,
                      data TEXT
                      )''')
@@ -95,7 +95,7 @@ def update_this(uid, domain=None, filename=None, download_complete=None, starter
 
 def insert_this(domain="", filename="", download_complete=0, starter=0, percentage=0, toa="", data=None):
     '''
-    values can be appended to the db using this , any unpassed arguments results in activation
+    values can be newely added to the db using this , any unpassed arguments results in activation
     of keyword arguments
     returns its uuid : int
     '''
@@ -129,7 +129,7 @@ def read_for(uid=-1):
     else:
         c.execute("SELECT * FROM users")
 
-    result = str(c.fetchone())
+    result = tuple(c.fetchone())
 
     # Close
     c.close()
