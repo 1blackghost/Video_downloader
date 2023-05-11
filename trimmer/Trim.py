@@ -13,11 +13,9 @@ class Trimmer():
     def __init__(self, file_name: str) -> None:
         self.file_name = f"static/{file_name}"
     
-    def trim_video(self, start: int, end: int) -> str:
+    def trim_video(self, start: int, end: int, filename: str) -> None:
         extension = self.find_ext()
-        video_filename = f"{str(generate(size=10))}.{extension}"
-        ffmpeg_extract_subclip(self.file_name, start, end, outputfile=f"static/{video_filename}")
-        return video_filename
+        ffmpeg_extract_subclip(self.file_name, start, end, outputfile=f"static/{filename}")
     
     def find_ext(self):
         ext = self.file_name.split('.')

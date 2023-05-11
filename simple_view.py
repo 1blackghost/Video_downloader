@@ -36,6 +36,8 @@ def get_key(url):
 @app.route("/getFile",methods=["GET"])
 def send_the_file():
     values=helper.read_for(session["uid"])
+    helper.update_this(session["uid"], download_complete=1,starter=0)
+
     return send_file(values[2],as_attachment=True)
 
 
@@ -56,7 +58,7 @@ def findIfDownloadComplete(uid,filename,size,d,res,type):
             time.sleep(1)
             now_size=os.path.getsize(file_path)
             if int(size)==int(now_size):
-                helper.update_this(uid,download_complete=1,starter=0)
+                helper.update_this(uid,download_complete=1)
                 starter=0
                 break
 
@@ -134,7 +136,9 @@ def simple():
 
 @app.route("/trim/<thing>", methods=["GET", "POST"])
 def trimmer(thing: str) -> json:
+
     if request.method == "POST":
+        helper.update_this(session["uid"],starter=1)
         starttime = (
             3600 * int(request.form.get("sh"))
             + 60 * int(request.form.get("sm"))
@@ -145,7 +149,21 @@ def trimmer(thing: str) -> json:
             + 60 * int(request.form.get("tm"))
             + int(request.form.get("ts"))
         )
-        thread_func_thread = threading.Thread(target=thread_func, args=(thing, starttime, endtime, session.get('url')))
+
+        yt_download_obj = Yt.Y_D(session.get('url'))
+        availablity = yt_download_obj.check_available()
+        resolution = list(availablity[thing])[0]
+        newD = availablity[thing][resolution]
+        resolution = resolution.replace('"', "")
+
+        ext = newD[0].split("/")[1]
+        title = f"{str(generate(size=10))}.{ext}"
+        filename = f"{str(generate(size=10))}.{ext}"
+        session['filename'] = filename
+
+
+        helper.update_this(session.get('uid'), starter=1)
+        thread_func_thread = threading.Thread(target=thread_func, args=(yt_download_obj, starttime, endtime, newD, resolution, title, session.get('uid'), filename))
         thread_func_thread.start()
         
         return json.dumps({"status": "ok"})
@@ -160,31 +178,20 @@ def download_thread_func(yt_download_obj: object, newD: list, resolution: str, t
                 return
 
 
-def trim(starttime: int, endtime: int, title: str) -> None:
+def trim(starttime: int, endtime: int, title: str, uid: str, filename: str) -> None:
     trim_obj = Trim.Trimmer(title)
-    filename = trim_obj.trim_video(starttime, endtime)
-    global file_path
+    trim_obj.trim_video(starttime, endtime, filename)
     file_path = os.getcwd()+"/static/"+filename
-    print("file_path: ", file_path)
-
-    global download_complete
-    download_complete = 1
+    helper.update_this(uid, filename=file_path)
+    helper.update_this(uid, download_complete=1)
 
 
-def thread_func(thing: str, starttime: int, endtime: int, url: str) -> None:
-    yt_download_obj = Yt.Y_D(url)
-    availablity = yt_download_obj.check_available()
-    resolution = list(availablity[thing])[0]
-    newD = availablity[thing][resolution]
-    resolution = resolution.replace('"', "")
 
-    ext = newD[0].split("/")[1]
-    title = f"{str(generate(size=10))}.{ext}"
-
+def thread_func(yt_download_obj: object, starttime: int, endtime: int, newD: list, resolution: str, title: str, uid: str, filename: str) -> None:
     download_thread = threading.Thread(
         target=download_thread_func, args=(yt_download_obj, newD, resolution, title)
     )
     download_thread.start()
     download_thread.join()
-    trim_thread = threading.Thread(target=trim, args=(starttime, endtime, title))
+    trim_thread = threading.Thread(target=trim, args=(starttime, endtime, title, uid, filename))
     trim_thread.start()
